@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalBites - Listings</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="listings.html" class="active">Restaurants</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <h1>All Restaurants</h1>
+
+    <!-- Category Filter -->
+    <div id="filters">
+        <button data-category="all">All</button>
+        <button data-category="fastfood">Fast Food</button>
+        <button data-category="traditional">Traditional</button>
+        <button data-category="cafe">Café</button>
+    </div>
+
+    <!-- Restaurant Cards -->
+    <div id="restaurant-list">
+        <div class="card">
+            <h3>Restaurant Name</h3>
+            <p>Cuisine Type</p>
+            <a href="details.html">View Details</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
