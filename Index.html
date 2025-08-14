@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation -->
+<!--navigation -->
     <header>
         <nav>
-            <span class="nav-name">Localbites.</span>
+            <span style="background: linear-gradient(to right, red,white);
+-webkit-background-clip: text;
+color: transparent;" class="nav-name">Localbites.</span>
             <a href="index.html">Home</a>
             <a href="listings.html">Restaurants</a>
             <a href="contact.html">Contact</a>
@@ -19,9 +21,11 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Discover Great Food Near You</h1>
-        <a class="btn" href="listings.html">Find Restaurants</a>
-    </section>
+  <div class="hero-content">
+    <h1>Discover Great Food Near You</h1>
+    <a class="btn" href="listings.html">Find Restaurants</a>
+  </div>
+</section>
 
     <!-- Search -->
     <section>
@@ -30,21 +34,45 @@
 
     <!-- Featured Restaurants -->
     <section id="featured">
-        <h2>Featured Restaurants</h2>
+        <h2 style="color:white;">Featured Restaurants</h2>
         <div class="grid">
-            <div class="card">Placeholder Restaurant</div>
-            <div class="card">Placeholder Restaurant</div>
-            <div class="card">Placeholder Restaurant</div>
-            <div class="card">Placeholder Restaurant</div>
+            <div class="card">
+            <img style="width:100px;" src="./r1.jpeg" alt="restaurant-photo">
+            <h3>New york Harvey's Bar and Grill</h3>
+            <p>Cuisine:American</p>
+            <p>Rating:★★★★</p>
+            </div>
+            <div class="card">
+              <img  style="width:100px;" src="./r2.jpeg" alt="restaurant-photo">
+              <h3>Burger Street</h3>
+                <p>Cuisine:American</p>
+                <p>Rating:★★★</p>
+            </div>
+            <div class="card">
+              <img style="width:100px;"  src="./r3.jpeg" alt="restaurant-photo">
+                <h3>Waffle House</h3>
+                <p>Cuisine:American</p>
+                <p>Rating:★★★</p>
+            </div>
+            <div class="card">
+            <img style="width:100px;"  src="./r4.jpeg" alt="restaurant-photo">
+               <h3>Le Mazaün</h3>
+              <p>Cuisine:Italian</p>
+              <p>Rating:★★★★</p>
+            </div>
         </div>
     </section>
 
     <!-- Specials -->
     <section id="specials">
-        <h2>Today's Specials</h2>
-        <div id="specials-rotator">Special will appear here...</div>
+        <h2 style="color:white;">Today's Specials</h2>
+        <div style="color:white; margin-left:110px;" id="specials-rotator">Special will appear here...</div>
     </section>
-
+    <section>
+      <footer style="background: #3E0703; color: white; text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+        <p style="font-size: 0.9rem; opacity: 0.8;">&copy; 2025 All Rights Reserved — DevMide</p>
+    </footer>
+    </section>
     <script src="./script.js"></script>
 </body>
 </html>
