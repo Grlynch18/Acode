@@ -9,28 +9,82 @@ body {
     background-repeat:no-repeat ;
     background-size: cover;
 }
-
+/*Smooth scrolling*/
+html{
+  scroll-behavior: smooth;
+}
+/* Sticky Navigation */
 header {
-    background-color:#3E0703;
-    padding: 1rem;
+    background-color: #3E0703;
+    padding: 1 rem;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Enhanced sticky nav with backdrop blur effect */
+header.scrolled {
+    background-color: rgba(62, 7, 3, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
 }
 
 nav {
     display: flex;
-    gap: 1.5rem;
+    gap:1.5rem;
     justify-content: center;
+    align-items: center;
 }
 
 nav a {
     text-decoration: none;
     color: white;
     font-weight: 500;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    position: relative;
 }
 
 nav a:hover, nav a.active {
-    background: linear-gradient(to right,purple, black);-webkit-background-clip: text;
-color: transparent;
+    background: linear-gradient(to right, white, black);
+    -webkit-background-clip: text;
+    color: transparent;
+    transform: translateY(-2px);
+}
+
+/* Add a subtle glow effect on hover */
+nav a:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(128, 0, 128, 0.2), rgba(0, 0, 0, 0.2));
+    border-radius: 25px;
+    z-index: -1;
+}
+
+/* Logo/Brand name styling */
+.nav-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 2rem;
+    background: linear-gradient(to right, red, white);
+    -webkit-background-clip: text;
+    color: transparent;
+    transition: all 0.3s ease;
+}
+#restaurant-list,.card{
+  margin-bottom: 20px;
+}
+
+.nav-name:hover {
+    transform: scale(1.05);
 }
 
 h1, h2 {
@@ -59,6 +113,12 @@ h1, h2 {
     border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    background: #8B0D07;
 }
 
 /* Layout */
@@ -70,16 +130,157 @@ h1, h2 {
 }
 
 .card {
-    background:white;
+    background: white;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
     text-align: center;
-    transition: transform 0.5s ease;
+    transition: transform 0.5s ease, height 0.5s ease, min-height 0.5s ease;
+    position: relative;
+    overflow: hidden;
+    min-height: 200px;
 }
 
 .card:hover {
     transform: scale(1.1);
+}
+
+/* Expandable Card Styles */
+.expandable-card {
+    cursor: pointer;
+    height: auto;
+}
+
+.expandable-card.animating {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 8px 25px rgba(102, 11, 5, 0.3);
+}
+
+.expandable-card.expanded {
+    min-height: 400px;
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(102, 11, 5, 0.2);
+}
+
+.expandable-card.expanded:hover {
+    transform: scale(1.02); /* Override the hover scale for expanded cards */
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(102, 11, 5, 0.1);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.expandable-card.animating .loading-overlay {
+    display: flex;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(102, 11, 5, 0.3);
+    border-top: 2px solid #660B05;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Card details */
+.card-details {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+    margin-top: 1rem;
+}
+
+.expandable-card.expanded .card-details {
+    max-height: 300px;
+    opacity: 1;
+}
+
+.restaurant-description {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+}
+
+.restaurant-info {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.restaurant-info p {
+    margin: 0.3rem 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.restaurant-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #660B05, #8B0D07);
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.restaurant-link:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 15px rgba(102, 11, 5, 0.3);
+}
+
+.external-link-icon {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.click-hint {
+    color: #999;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+    transition: all 0.3s ease;
+}
+
+.expandable-card.expanded .click-hint {
+    opacity: 0;
+    max-height: 0;
+    margin-top: 0;
+}
+
+.hint-icon {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
 }
 
 /* Filters */
@@ -147,6 +348,7 @@ form button {
 form button:hover {
     background: #ffe0b2;
 }
+
 input, .text {
     margin-left: 60px;
     border-radius:30px;
@@ -161,6 +363,7 @@ input, .text {
     outline: none;
     text-align: center;
 }
+
 input.text:focus {
     width: 400px;
     background: linear-gradient(to right, #fff7f5, #ffece8);
@@ -179,19 +382,72 @@ input.text::placeholder {
     color: #999;
     font-style: italic;
 }
+
 .input:focus, .text:focus {
-    width: 400px; /* expanded width */
-    background: linear-gradient(to r
+    width: 400px;
+}
+
 h2{
     color:black;
 }
+
 .span,.nav-name{
     font-size: large;
-    color: white;
-    background: linear-gradient(to right, ,);
--webkit-background-clip: text;
-color: transparent;
 }
+
 .h2{
   color: white;
+}
+
+/* Fade-in Animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Specials Rotator Fade */
+#specials-rotator {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .expandable-card.expanded {
+        min-height: 350px;
+    }
+    
+    .restaurant-info {
+        text-align: center;
+    }
+
+    /* Mobile navigation adjustments */
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .nav-name {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+    
+    nav a {
+        font-size: 0.9rem;
+        padding: 0.4rem 0.8rem;
+    }
 }
