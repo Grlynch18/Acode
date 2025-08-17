@@ -1,0 +1,220 @@
+/* ====== Design Tokens ====== */
+:root{
+  --bg-start:#0e0d13;
+  --bg-mid:#1a1330;
+  --bg-end:#0e0d13;
+
+  --surface:#141826;         /* card surface */
+  --surface-2:#0f1320;       /* header / footer */
+  --text:#e9edf1;
+  --text-muted:#a8b0c3;
+  --border:#242a3b;
+
+  --accent:#7c5cff;          /* purple accent */
+  --accent-2:#4f46e5;        /* indigo */
+  --up:#10b981;              /* green */
+  --down:#ef4444;            /* red */
+
+  --radius:14px;
+  --shadow:0 6px 20px rgba(0,0,0,.35);
+}
+
+/* ====== Base Reset ====== */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font: 500 15px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(124,92,255,.25), transparent 60%),
+    radial-gradient(900px 600px at -10% 20%, rgba(79,70,229,.25), transparent 55%),
+    linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 45%, var(--bg-end) 100%);
+  background-attachment: fixed;
+}
+
+/* Headings & text */
+h1{
+  margin:18px 0 14px;
+  font-weight:700;
+  letter-spacing:.2px;
+  text-align:center;
+}
+p{ margin:.35rem 0; }
+
+/* ====== Layout ====== */
+main{ width:100%; }
+.container{
+  max-width:1080px;
+  margin:0 auto;
+  padding:0 16px 24px;
+}
+
+/* ====== Controls (search, currency, refresh) ====== */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  padding:6px 0 10px;
+}
+input[type="text"], select, button{
+  appearance:none;
+  border:none;
+  outline:none;
+  color:var(--text);
+  background:var(--surface-2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 12px;
+  min-height:40px;
+}
+input[type="text"]{
+  min-width:200px;
+  width:260px;
+  max-width:420px;
+}
+select{
+  min-width:120px;
+}
+button{
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-2) 100%);
+  cursor:pointer;
+  font-weight:600;
+  transition: transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+  box-shadow: 0 6px 14px rgba(124,92,255,.25);
+}
+button:hover{ transform: translateY(-1px); }
+button:active{ transform: translateY(0); opacity:.9; }
+
+/* ====== Sort Controls ====== */
+.sort-controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+  margin:10px 0 16px;
+}
+.sort-controls button{
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:8px 12px;
+  border-radius:10px;
+  box-shadow:none;
+}
+.sort-controls button:hover{
+  border-color: var(--accent);
+  background: rgba(124,92,255,.08);
+}
+
+/* ====== Grid of Coins ====== */
+#crypto-container{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap:16px;
+  padding:0 4px;
+}
+
+/* ====== Coin Card ====== */
+/* Works for both .coin and .coin-card so you don’t have to rename HTML */
+.coin, .coin-card{
+  background: linear-gradient(145deg, #141020, #1b1630 55%, #151225);
+  border:1px solid var(--border);
+  border-radius: var(--radius);
+  padding:16px;
+  box-shadow: var(--shadow);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+.coin:hover, .coin-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.45);
+  border-color: rgba(124,92,255,.45);
+}
+
+.coin img, .coin-card img{
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+  border-radius:10px;
+  object-fit:contain;
+  background:#0e1120;
+  border:1px solid var(--border);
+}
+
+/* Text inside card */
+.coin h3, .coin-card h3{
+  margin:0 0 4px 0;
+  font-size:16px;
+  letter-spacing:.2px;
+}
+.meta{
+  color:var(--text-muted);
+  font-size:13px;
+}
+.price{
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+/* Up / Down colors */
+.positive{ color: var(--up); }
+.negative{ color: var(--down); }
+
+/* Favorite/watchlist button if present */
+.fav-btn{
+  margin-top:8px;
+  background:transparent;
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:6px 10px;
+  border-radius:8px;
+  font-weight:600;
+}
+.fav-btn:hover{
+  border-color: var(--accent);
+  background: rgba(124,92,255,.08);
+}
+
+/* Last updated text */
+#last-updated{
+  text-align:center;
+  color:var(--text-muted);
+  font-size:13px;
+  margin:14px 0 8px;
+}
+
+/* ====== Responsive Tweaks ====== */
+@media (max-width: 900px){
+  .container{ padding:0 14px 22px; }
+  #crypto-container{ gap:14px; }
+}
+@media (max-width: 640px){
+  h1{ font-size:20px; }
+  .controls{ gap:8px; }
+  input[type="text"]{ width:100%; max-width:none; }
+  .coin, .coin-card{
+    padding:14px;
+    gap:12px;
+  }
+  .coin img, .coin-card img{
+    width:44px; height:44px; flex-basis:44px;
+  }
+}
+@media (max-width: 420px){
+  .coin, .coin-card{
+    flex-direction:row;      /* keep row but tighter */
+  }
+  .coin h3, .coin-card h3{ font-size:15px; }
+}
+footer {
+  margin-top: 40px;
+  padding: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Tracker</title>
+  <link rel="icon" type="image/jpg" href="./favicon.jpg">
+  <link rel="stylesheet" href="./cointracker.css">
+</head>
+<body>
+  <h1>Crypto Tracker</h1>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search coin...">
+    <select id="currency">
+      <option value="usd" selected>USD</option>
+      <option value="eur">EUR</option>
+      <option value="ngn">NGN</option>
+    </select>
+    <button onclick="fetchData()">Refresh</button>
+  </div>
+
+  <div class="sort-controls">
+    <button onclick="sortCoins('market_cap','desc')">Market Cap ↓</button>
+    <button onclick="sortCoins('market_cap','asc')">Market Cap ↑</button>
+    <button onclick="sortCoins('change','desc')">24h Change ↓</button>
+    <button onclick="sortCoins('change','asc')">24h Change ↑</button>
+  </div>
+
+  <div id="crypto-container"></div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Devmide. All rights reserved.</p>
+  </footer>
+
+  <script>
+    let coinsData = [];
+    let currentCurrency = "usd";
+
+    async function fetchData() {
+      try {
+        const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currentCurrency}&order=market_cap_desc&per_page=50&page=1&sparkline=false`);
+        coinsData = await res.json();
+        displayCoins(coinsData);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    }
+
+    function displayCoins(data) {
+      const container = document.getElementById("crypto-container");
+      container.innerHTML = "";
+
+      data.forEach(coin => {
+        const coinDiv = document.createElement("div");
+        coinDiv.className = "coin";
+
+        coinDiv.innerHTML = `
+          <img src="${coin.image}" alt="${coin.name}">
+          <div>
+            <h3>${coin.name} (${coin.symbol.toUpperCase()})</h3>
+            <p class="price">${coin.current_price.toLocaleString()} ${currentCurrency.toUpperCase()}</p>
+            <p class="${coin.price_change_percentage_24h >= 0 ? "positive" : "negative"}">
+              ${coin.price_change_percentage_24h.toFixed(2)}%
+            </p>
+            <p>Market Cap: ${coin.market_cap.toLocaleString()}</p>
+          </div>
+        `;
+        container.appendChild(coinDiv);
+      });
+    }
+
+    function sortCoins(criteria, direction = "asc") {
+      let sorted = [...coinsData];
+
+      if (criteria === "market_cap") {
+        sorted.sort((a, b) => direction === "asc" ? a.market_cap - b.market_cap : b.market_cap - a.market_cap);
+      } else if (criteria === "change") {
+        sorted.sort((a, b) => direction === "asc" ? a.price_change_percentage_24h - b.price_change_percentage_24h : b.price_change_percentage_24h - a.price_change_percentage_24h);
+      }
+
+      displayCoins(sorted);
+    }
+
+    document.getElementById("currency").addEventListener("change", e => {
+      currentCurrency = e.target.value;
+      fetchData();
+    });
+
+    document.getElementById("search").addEventListener("input", e => {
+      const term = e.target.value.toLowerCase();
+      const filtered = coinsData.filter(c => c.name.toLowerCase().includes(term) || c.symbol.toLowerCase().includes(term));
+      displayCoins(filtered);
+    });
+
+    // Initial load
+    fetchData();
+  </script>
+</body>
+</html>
